@@ -5,7 +5,7 @@
   <description>The keyboard package</description>
   <maintainer email="chris.mower@ed.ac.uk">Christopher E. Mower</maintainer>
   <license>BSD</license>
-  <!-- <url type="website"></url> -->
+  <url type="website">https://github.com/cmower/ros-keyboard</url>
 
   <author email="chris.mower@ed.ac.uk">Christopher E. Mower</author>
 
