@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+import rospy
+from keyboard.msg import Keyboard
+
+class Listener(object):
+
+    def __init__(self):
+        self.sub = rospy.Subscriber('keyboard', Keyboard, self.callback)
+
+    def callback(self, msg):
+        print "Key b: %d" % msg.K_b
+
+if __name__=='__main__':
+    rospy.init_node('test_keyboard_node')
+    li = Listener()
+    rospy.spin()
+
+    

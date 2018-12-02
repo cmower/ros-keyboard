@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="keyboard" name="keyboard_node" type="keyboard_node.py">
+    <param name="hz" type="int" value="120"/>
+  </node>
+  
+</launch>
