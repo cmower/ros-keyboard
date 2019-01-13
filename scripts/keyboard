@@ -143,27 +143,44 @@ keys = {\
         122 : 'K_z'\
 }
 
+# Topics to publish
+TOPICS = ['keyboard/binary', 'keyboard/keyup', 'keyboard/keydown']
+
 class KeyboardStatePublisher(object):
 
     """Publishes state of the keyboard."""
 
     def __init__(self):
         
-        self.msg = Keyboard()
-        self.pub = rospy.Publisher('keyboard', Keyboard, queue_size=1)
+        self.msg_binary = Keyboard()
+        self.pub = {}
+        for topic in TOPICS:
+            self.pub[topic] = rospy.Publisher(topic, Keyboard, queue_size=1)
 
     def update(self, event):
+        
+        # Init msgs
+        msg_keyup = Keyboard()
+        msg_keydown = Keyboard()
 
-        # Update state
-        self.msg.header.stamp = rospy.Time.now()
+        self.msg_binary.header.stamp = rospy.Time.now()
+        msg_keyup.header.stamp = rospy.Time.now()
+        msg_keydown.header.stamp = rospy.Time.now()
+        
+        # Transfer keyboard state in pygame -> msgs
         for ev in pygame.event.get():
-            if ev.type == pygame.KEYDOWN:
-                setattr(self.msg, keys[ev.key], 1)
             if ev.type == pygame.KEYUP:
-                setattr(self.msg, keys[ev.key], 0)                
+                k = keys[ev.key]
+                setattr(self.msg_binary, k, 0)
+                setattr(msg_keyup, k, 1)
+            if ev.type == pygame.KEYDOWN:
+                k = keys[ev.key]
+                setattr(self.msg_binary, k, 1)
+                setattr(msg_keydown, k, 1)
 
-        # Publish
-        self.pub.publish(self.msg)
+        # Publish msgs
+        for topic, msg in zip(TOPICS, [self.msg_binary, msg_keyup, msg_keydown]):
+            self.pub[topic].publish(msg)
         
 if __name__=='__main__':
     pygame.init()

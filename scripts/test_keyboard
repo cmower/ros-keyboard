@@ -5,7 +5,7 @@ from keyboard.msg import Keyboard
 class Listener(object):
 
     def __init__(self):
-        self.sub = rospy.Subscriber('keyboard', Keyboard, self.callback)
+        self.sub = rospy.Subscriber('keyboard/binary', Keyboard, self.callback)
 
     def callback(self, msg):
         print "Key b: %d" % msg.K_b
