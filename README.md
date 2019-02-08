@@ -10,11 +10,11 @@ Clone `ros-keyboard` repository to your catkin workspace using
 ```
 
 Add the following to your launch file.
-```
+```xml
 	<include file="$(find keyboard)/launch/keyboard.launch"/>
 ```
 By default the keyboard node runs at 100Hz. If you would like to change this to 150Hz (for example), then use
-```
+```xml
 	<arg name="keyboard_hz" value="150"/>
 	<include file="$(find keyboard)/launch/keyboard.launch" pass_all_args="true"/>
 ```
