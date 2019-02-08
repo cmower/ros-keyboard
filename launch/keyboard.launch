@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="keyboard_hz" default="100"/>
+
+  <node pkg="keyboard"
+	name="keyboard_node"
+	type="keyboard">
+    <param name="hz" type="int" value="$(arg keyboard_hz)"/>
+  </node>
+  
+</launch>
